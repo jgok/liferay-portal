@@ -27,7 +27,6 @@ import com.liferay.portal.NoSuchLayoutRevisionException;
 import com.liferay.portal.PortletIdException;
 import com.liferay.portal.RemoteExportException;
 import com.liferay.portal.RemoteOptionsException;
-import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -105,7 +104,6 @@ import com.liferay.portal.service.LayoutBranchLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
-import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.service.LockLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
@@ -129,6 +127,7 @@ import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
 
 import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -142,6 +141,7 @@ import java.util.Set;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -1963,9 +1963,7 @@ public class StagingImpl implements Staging {
 
 		if (layoutBranchId <= 0) {
 			layoutBranchId = GetterUtil.getLong(
-				portalPreferences.getValue(
-					Staging.class.getName(),
-					key));
+				portalPreferences.getValue(Staging.class.getName(), key));
 
 			_recentlyUsedIds.put(key, layoutBranchId);
 		}
@@ -1999,9 +1997,7 @@ public class StagingImpl implements Staging {
 
 		if (layoutRevisionId <= 0) {
 			layoutRevisionId = GetterUtil.getLong(
-				portalPreferences.getValue(
-					Staging.class.getName(),
-					key));
+				portalPreferences.getValue(Staging.class.getName(), key));
 
 			_recentlyUsedIds.put(key, layoutRevisionId);
 		}
@@ -2337,7 +2333,6 @@ public class StagingImpl implements Staging {
 
 		_recentlyUsedIds.remove(
 			getRecentLayoutBranchIdKey(layoutSetBranchId, plid));
-
 	}
 
 	protected void validateRemoteGroup(
@@ -2426,9 +2421,9 @@ public class StagingImpl implements Staging {
 		}
 	}
 
-	private static final PortalCache<String, Long> _recentlyUsedIds = 
-		MultiVMPoolUtil.getCache(StagingImpl.class.getName());
-
 	private static final Log _log = LogFactoryUtil.getLog(StagingImpl.class);
+
+	private static final PortalCache<String, Long> _recentlyUsedIds =
+		MultiVMPoolUtil.getCache(StagingImpl.class.getName());
 
 }
