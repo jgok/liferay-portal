@@ -70,6 +70,25 @@ if (queryLogicIndex >= 0) {
 		<aui:option label="categories" selected='<%= Objects.equals(queryName, "assetCategories") %>' value="assetCategories" />
 	</aui:select>
 
+<%
+
+class AssetPortletResponseWrapper extends RenderResponseWrapper {
+	public AssetPortletResponseWrapper(PortletResponse reponse) {
+		super(reponse);
+	}
+
+	public String getNamespace() {
+		return "_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_";
+	}
+}
+
+PortletResponse originalPortletResponse = (PortletResponse)request.getAttribute(JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+PortletResponse portletResponse = new AssetPortletResponseWrapper(originalPortletResponse);
+
+request.setAttribute(JavaConstants.JAVAX_PORTLET_RESPONSE, portletResponse);
+
+%>
 	<div class="field tags-selector <%= Objects.equals(queryName, "assetTags") ? StringPool.BLANK : "hide" %>">
 		<liferay-asset:asset-tags-selector
 			groupIds="<%= categorizableGroupIds %>"
@@ -86,6 +105,10 @@ if (queryLogicIndex >= 0) {
 		/>
 	</div>
 </div>
+
+<%
+request.setAttribute(JavaConstants.JAVAX_PORTLET_RESPONSE, originalPortletResponse);
+%>
 
 <aui:script sandbox="<%= true %>">
 	var select = $('#<%= portletResourceNamespace + randomNamespace %>selector');
