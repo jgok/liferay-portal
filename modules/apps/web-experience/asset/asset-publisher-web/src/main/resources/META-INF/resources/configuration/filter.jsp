@@ -76,6 +76,7 @@
 				request.setAttribute("configuration.jsp-categorizableGroupIds", assetPublisherDisplayContext.getReferencedModelsGroupIds());
 				request.setAttribute("configuration.jsp-index", String.valueOf(index));
 				request.setAttribute("configuration.jsp-queryLogicIndex", String.valueOf(queryLogicIndex));
+				request.setAttribute("portletResource", portletName);
 
 				String cssClass = StringPool.BLANK;
 
@@ -118,7 +119,7 @@
 			contentBox: '#<portlet:namespace />queryRules',
 			fieldIndexes: '<portlet:namespace />queryLogicIndexes',
 			namespace: '<portlet:namespace />',
-			url: '<liferay-portlet:renderURL portletName="<%= AssetPublisherPortletKeys.ASSET_PUBLISHER %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/edit_query_rule.jsp" /><portlet:param name="categorizableGroupIds" value="<%= StringUtil.merge(assetPublisherDisplayContext.getReferencedModelsGroupIds()) %>" /></liferay-portlet:renderURL>'
+			url: '<liferay-portlet:renderURL portletName="<%= AssetPublisherPortletKeys.ASSET_PUBLISHER %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/edit_query_rule.jsp" /><portlet:param name="categorizableGroupIds" value="<%= StringUtil.merge(assetPublisherDisplayContext.getReferencedModelsGroupIds()) %>" /><portlet:param name="portletResource" value="<%= portletName %>" /><portlet:param name="index" value="1" /></liferay-portlet:renderURL>'
 		}
 	).render();
 </aui:script>
